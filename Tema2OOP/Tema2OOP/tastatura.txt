@@ -1,0 +1,10 @@
+Electronics,1,Laptop,Electronics,999.99,10,12
+Electronics,2,Smartphone,Electronics,499.99,5,6
+Clothing,3,T-Shirt,Apparel,29.99,25,M,Cotton
+Clothing,4,Jeans,Apparel,49.99,15,L,Denim
+Electronics,5,Tablet,Electronics,799.99,20,24
+Clothing,6,Jacket,Apparel,89.99,10,L,Polyester
+Electronics,7,Camera,Electronics,299.99,10,36
+Clothing,8,Scarf,Apparel,19.99,30,One Size,Silk
+Electronics,9,Monitor,Electronics,199.99,10,12
+Clothing,10,Hat,Apparel,24.99,20,One Size,Wool
