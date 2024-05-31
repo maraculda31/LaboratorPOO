@@ -161,7 +161,15 @@ public:
             }
         }
     }
-
+    bool findProductInCartById(const std::vector<Cart::CartItem>& items, int id, Cart::CartItem& foundItem) {
+        for (const auto& item : items) {
+            if (item.product.getId() == id) {
+                foundItem = item;
+                return true;
+            }
+        }
+        return false;
+    }
     std::string highestValueCategory() const {
         std::map<std::string, double> categoryTotals;
 
@@ -205,6 +213,16 @@ std::ostream& operator<<(std::ostream& os, const Cart& cart) {
     }
     os << "Total Price: $" << cart.calculateTotal() << std::endl;
     return os;
+}
+
+static bool findProductById(const std::vector<Product>& products, int id, Product& foundProduct) {
+    for (const auto& product : products) {
+        if (product.getId() == id) {
+            foundProduct = product;
+            return true;
+        }
+    }
+    return false;
 }
 
 static void readProductFromFile(std::istream& is, Product& product) {
@@ -289,9 +307,13 @@ int main() {
             int index;
             std::cout << "Enter product index to add to cart: ";
             std::cin >> index;
-            if (index >= 1 && index <= static_cast<int>(products.size())) {
-                
-                cart.addProduct(products[index - 1], 1);
+            Product foundProduct;
+            if (findProductById(products, index, foundProduct)) {
+                cart.addProduct(foundProduct, 1);
+                std::cout << "Product added to cart.\n";
+            }
+            else {
+                std::cout << "Product with index " << index << " not found.\n";
             }
             break;
         }
@@ -299,24 +321,36 @@ int main() {
             int index;
             std::cout << "Enter product index to remove from cart: ";
             std::cin >> index;
-            if (index >= 1 && index <= static_cast<int>(products.size())) {
-                
-                cart.removeProduct(products[index - 1]);
+
+            Product foundProduct;
+            if (findProductById(products, index, foundProduct)) {
+                cart.removeProduct(foundProduct);
+                std::cout << "Product removed from cart.\n";
+            }
+            else {
+                std::cout << "Product with ID " << index << " not found.\n";
             }
             break;
         }
+
         case 7: {
             int index, qty;
             std::cout << "Enter product index to update quantity: ";
             std::cin >> index;
             std::cout << "Enter new quantity: ";
             std::cin >> qty;
-            if (index >= 1 && index <= static_cast<int>(products.size())) {
 
-                cart.updateProductQuantity(products[index - 1], qty);
+            Product foundProduct;
+            if (findProductById(products, index, foundProduct)) {
+                cart.updateProductQuantity(foundProduct, qty);
+                std::cout << "Product quantity updated.\n";
+            }
+            else {
+                std::cout << "Product with index " << index << " not found.\n";
             }
             break;
         }
+
         case 8: {
             std::cout << cart;
             break;
